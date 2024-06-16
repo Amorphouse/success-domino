@@ -4,6 +4,11 @@
 SuccessDominoは、小さなチャレンジを提案するアプリケーションです。
 
 ## セットアップ方法
+### GitHub
+```bash
+git config --local commit.template ./.gitcommit_template  
+git config --global core.editor 'code --wait'
+```
 ### フロントエンド
 ```bash
 cd frontend
