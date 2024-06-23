@@ -1,0 +1,12 @@
+[build]
+  functions = "backend/functions"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+[dev]
+  command = "npm run serve --prefix frontend"
+  port = 8888
+  targetPort = 8080
