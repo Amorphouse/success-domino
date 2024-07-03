@@ -1,5 +1,11 @@
 [build]
+  base = "."
+  command = "cd backend && npm install && cd ../frontend && npm install && npm run build"
+  publish = "frontend/dist"
   functions = "backend/functions"
+
+[functions]
+  directory = "backend/functions" 
 
 [[headers]]
   for = "/*"
