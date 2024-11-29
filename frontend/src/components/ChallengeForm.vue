@@ -50,6 +50,61 @@ export default {
 
 <style scoped>
 /* Markdownスタイルの調整 */
+/* フォーム全体のスタイリング */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 入力フィールドのスタイリング */
+input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
+/* ボタンのスタイリング */
+button {
+  padding: 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357abd;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 480px) {
+  form {
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px;
+  }
+}
+:deep(*) {
+  text-align: left; /* すべての要素を左寄せに */
+}
 :deep(h1) {
   font-size: 2em;
   margin-bottom: 0.5em;
