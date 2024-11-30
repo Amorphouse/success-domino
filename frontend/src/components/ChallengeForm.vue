@@ -44,37 +44,30 @@
     </div>
   </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import axios from 'axios';
 import { marked } from 'marked';
 
-export default {
-  data() {
-    return {
-      role: '',
-      goal: '',
-      notes: '',
-      challenge: ''
-    };
-  },
-  computed: {
-    renderedChallenge() {
-      return this.challenge ? marked(this.challenge) : '';
-    }
-  },
-  methods: {
-    async handleSubmit() {
-      try {
-        const response = await axios.post('/.netlify/functions/generate-challenge-google', {
-          role: this.role,
-          goal: this.goal,
-          notes: this.notes
-        });
-        this.challenge = response.data.challenge;
-      } catch (error) {
-        console.error('Error generating challenge:', error);
-      }
-    }
+const role = ref('');
+const goal = ref('');
+const notes = ref('');
+const challenge = ref('');
+
+const renderedChallenge = computed(() => {
+  return challenge.value ? marked(challenge.value) : '';
+});
+
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post('/.netlify/functions/generate-challenge-google', {
+      role: role.value,
+      goal: goal.value,
+      notes: notes.value
+    });
+    challenge.value = response.data.challenge;
+  } catch (error) {
+    console.error('Error generating challenge:', error);
   }
 };
 </script>
