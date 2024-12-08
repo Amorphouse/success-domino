@@ -1,49 +1,73 @@
 <template>
-  <div>
-    <form @submit.prevent="handleSubmit">
-      <input type="text" v-model="role" placeholder="ロール" />
-      <input type="text" v-model="goal" placeholder="目的" />
-      <input type="text" v-model="notes" placeholder="備考" />
-      <button type="submit">チャレンジ生成</button>
-    </form>
-    <div v-if="challenge">
-      <h2>生成されたチャレンジ</h2>
-      <div v-html="renderedChallenge"></div>
+  <div class="q-pa-lg row items-start q-gutter-md">
+    <h3>Form</h3>
+        <q-form @submit.prevent="handleSubmit" class="q-gutter-md">
+          <q-input 
+            v-model="role" 
+            label="ロール" 
+            outlined
+            dense
+            :rules="[val => !!val || 'ロールを入力してください']"
+          />
+          
+          <q-input 
+            v-model="goal" 
+            label="目的" 
+            outlined
+            dense
+            :rules="[val => !!val || '目的を入力してください']"
+          />
+          
+          <q-input 
+            v-model="notes" 
+            label="備考" 
+            outlined
+            dense
+            hint="オプションの追加情報"
+          />
+          
+          <q-btn 
+            type="submit" 
+            color="primary" 
+            label="チャレンジ生成" 
+            icon-right="add_circle"
+          />
+        </q-form>
+  
+        <q-card v-if="challenge" class="q-mt-md">
+          <q-card-section>
+            <div class="text-h6">生成されたチャレンジ</div>
+            <div v-html="renderedChallenge" class="q-mt-sm"></div>
+          </q-card-section>
+        </q-card>
+  
     </div>
-  </div>
-</template>
+  </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import axios from 'axios';
 import { marked } from 'marked';
 
-export default {
-  data() {
-    return {
-      role: '',
-      goal: '',
-      notes: '',
-      challenge: ''
-    };
-  },
-  computed: {
-    renderedChallenge() {
-      return this.challenge ? marked(this.challenge) : '';
-    }
-  },
-  methods: {
-    async handleSubmit() {
-      try {
-        const response = await axios.post('/.netlify/functions/generate-challenge-google', {
-          role: this.role,
-          goal: this.goal,
-          notes: this.notes
-        });
-        this.challenge = response.data.challenge;
-      } catch (error) {
-        console.error('Error generating challenge:', error);
-      }
-    }
+const role = ref('');
+const goal = ref('');
+const notes = ref('');
+const challenge = ref('');
+
+const renderedChallenge = computed(() => {
+  return challenge.value ? marked(challenge.value) : '';
+});
+
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post('/.netlify/functions/generate-challenge-google', {
+      role: role.value,
+      goal: goal.value,
+      notes: notes.value
+    });
+    challenge.value = response.data.challenge;
+  } catch (error) {
+    console.error('Error generating challenge:', error);
   }
 };
 </script>
