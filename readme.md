@@ -13,7 +13,7 @@ git config --global core.editor 'code --wait'
 ```bash
 cd frontend
 npm install
-npm run serve
+cd ..
 ```
 
 ### バックエンド
@@ -21,7 +21,12 @@ npm run serve
 cd backend
 npm install
 echo "OPENAI_API_KEY=your_openai_api_key" > .env
-npm start
+cd ..
+```
+
+## 実行
+```bash
+netlify dev
 ```
 
 ## test
